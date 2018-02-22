@@ -1,15 +1,28 @@
-import { Component } from '@nestjs/common';
-import { Car } from './interfaces/car.interface';
+import { Component} from '@nestjs/common';
+import { Car } from './entities/car.entity';
+import { CreateCarDto } from './dto/create-car.dto';
+import { UpdateCarDto } from './dto/update-car.dto';
 
 @Component()
 export class CarsService {
   private id: number = 1;
-  private readonly cars: Car[] = [];
+	private readonly cars: Car[] = [];
 
-  create(car: Car) {
-  	car.id = this.id;
-  	this.cars.push(car);
-    ++this.id;
+	constructor(){
+		console.log('Im the Persisted Service');
+	}
+  create(carDto: CreateCarDto) {
+		let id: number = this.id;
+		let car: Car = {
+			id : id,
+			brand: carDto.brand,
+			model: carDto.model,
+			power: carDto.power,
+			year: carDto.year
+		}
+		this.cars.push(car);
+		++this.id;
+		return id;
   }
 
   findAll(): Car[] {
@@ -29,10 +42,10 @@ export class CarsService {
   	}
   }
 
-  update(car: Car): Car{
+  update(carDto: UpdateCarDto): Car{
   	for (var i = this.cars.length - 1; i >= 0; i--) {
-  		if (this.cars[i].id == car.id) {
-  			this.cars[i] = car;
+  		if (this.cars[i].id == carDto.id) {
+  			this.cars[i] = carDto;
   			return this.cars[i];
   		}
   	}

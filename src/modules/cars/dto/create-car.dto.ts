@@ -1,19 +1,21 @@
 import { IsString, IsInt } from 'class-validator';
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class CreateCarDto {
 	
-	@IsInt()
-  	readonly id: number;
-
 	@IsString()
+	@ApiModelProperty()
   	readonly brand: string;
 
-  	@IsString()
+	@IsString()
+	@ApiModelProperty()
   	readonly model: string;
 
-  	@IsInt()
+	@IsInt()
+	@ApiModelProperty()
   	readonly power: number;
 
-  	@IsInt()
+	@IsInt()
+	@ApiModelProperty()
   	readonly year: number;
 }
